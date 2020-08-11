@@ -1,18 +1,27 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-link
+      :to="item.to"
+      tag="el-button"
+      v-for="item of buttons"
+      :key="item.to"
+      >{{ item.title }}</router-link
+    >
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
-}
+  name: "Home",
+  data() {
+    return {
+      buttons: [
+        { to: "/el-tree", title: "el-tree" },
+        { to: "/el-scrollbar", title: "el-scrollbar" },
+      ],
+    };
+  },
+};
 </script>
