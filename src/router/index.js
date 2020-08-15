@@ -31,6 +31,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "el-tree" */ "../views/scroll"),
   },
+  {
+    path: "/thumbnail-slide",
+    name: "thumbnail-slide",
+    component: () =>
+      import(/* webpackChunkName: "el-tree" */ "../views/thumbnail-slide"),
+  },
 ];
 
 const router = new VueRouter({
