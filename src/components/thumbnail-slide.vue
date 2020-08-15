@@ -106,8 +106,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.wrapWidth = this.getWidth(this.$refs.wrap, "width");
-      this.showCount = Math.floor(this.wrapWidth / this.imageWidth / 2);
-      console.log(this.showCount);
+      this.showCount = Math.round(this.wrapWidth / this.imageWidth / 2);
     });
   },
 };
