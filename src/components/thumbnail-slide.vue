@@ -2,12 +2,13 @@
   <div class="flex w100 h100">
     <i
       class="pre dir el-icon-arrow-left"
+      :style="{ 'min-height': imageHeight + 'px', width: '25px' }"
       @click="index = index <= 0 ? itemsLen - 1 : --index"
       v-if="dirChange"
     ></i>
     <section
       class="items flex h100 margin-lr"
-      style="overflow-y: auto;"
+      style="overflow-y: auto; width: calc(100% - 50px);"
       ref="wrap"
     >
       <el-row
@@ -28,27 +29,33 @@
           :class="{ 'margin-left-5': itemsLen !== i - 1 && i !== 0 }"
         >
           <div @click="index = i" class="w100 h100">
-            <img :src="item.src" alt="" class="w100 h100" />
+            <img
+              :src="item[imageKey]"
+              alt
+              class="w100 h100 dis-b"
+              :style="{ 'min-height': imageHeight + 'px' }"
+            />
             <span
               :class="{ active: i === index }"
               class="mask w100 h100"
             ></span>
             <p
               class="text-title text-center"
-              v-if="gMethods.nonEmptyProp(item.title)"
+              v-if="gMethods.nonEmptyProp(item[titleKey])"
             >
-              {{ item.title }}
+              {{ item[titleKey] }}
             </p>
           </div>
         </el-col>
       </el-row>
+      <span class="spacer"></span>
     </section>
     <i
       class="next dir el-icon-arrow-right"
+      :style="{ 'min-height': imageHeight + 'px', width: '25px' }"
       @click="index = index >= itemsLen - 1 ? 0 : ++index"
       v-if="dirChange"
-    >
-    </i>
+    ></i>
   </div>
 </template>
 
@@ -61,6 +68,7 @@ export default {
       wrapWidth: 0,
       showCount: 0,
       transformX: 0,
+      initiaCount: 0,
     };
   },
   props: {
@@ -80,10 +88,22 @@ export default {
       type: Number,
       default: 100,
     },
+    imageHeight: {
+      type: Number,
+      default: 75,
+    },
+    imageKey: {
+      type: String,
+      default: "src",
+    },
+    titleKey: {
+      type: String,
+      default: "name",
+    },
   },
   watch: {
     index(index) {
-      if (index < this.showCount) {
+      if (index < this.showCount || this.initiaCount >= this.itemsLen) {
         this.transformX = 0;
       } else if (index >= this.itemsLen - this.showCount) {
         this.transformX = -this.itemsLen * this.imageWidth + this.wrapWidth;
@@ -106,7 +126,8 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.wrapWidth = this.getWidth(this.$refs.wrap, "width");
-      this.showCount = Math.round(this.wrapWidth / this.imageWidth / 2);
+      this.initiaCount = this.wrapWidth / this.imageWidth;
+      this.showCount = Math.round(this.initiaCount / 2);
     });
   },
 };
@@ -128,8 +149,7 @@ p {
 .dir {
   width: 40px;
   height: 100%;
-  background: #030201;
-  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.5);
   color: #fff;
   font-size: 25px;
   text-align: center;
