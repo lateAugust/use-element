@@ -37,6 +37,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "el-tree" */ "../views/thumbnail-slide"),
   },
+  {
+    path: "/jsx",
+    name: "jsx-router",
+    component: () =>
+      import(/* webpackChunkName: "el-tree" */ "../views/jsx.vue"),
+  },
 ];
 
 const router = new VueRouter({

@@ -21,6 +21,7 @@ export default {
         { to: "/el-tree", title: "el-tree" },
         { to: "/el-scrollbar", title: "el-scrollbar" },
         { to: "/thumbnail-slide", title: "thumbnail-slide" },
+        { to: "/jsx", title: "jsx" },
       ],
     };
   },
